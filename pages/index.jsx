@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-function Home () {
-  const [childCount, setChildCount] = useState(0);
+function Home() {
+  const [childCount] = useState(0);
   const [frameId, setFrameId] = useState(null);
   const [renderer, setRenderer] = useState(null);
   const [cube, setCube] = useState(null);
@@ -41,14 +41,14 @@ function Home () {
     if (!frameId) {
       setFrameId(requestAnimationFrame(animate));
     }
-  }
-  const stop = () => {
-    cancelAnimationFrame(frameId);
   };
+  // const stop = () => {
+  //   cancelAnimationFrame(frameId);
+  // };
 
   useEffect(() => {
-    const width = 600;
-    const height = 600;
+    // const width = 600;
+    // const height = 600;
     // ADD SCENE
     const newScene = new THREE.Scene();
     // ADD CAMERA
@@ -83,11 +83,11 @@ function Home () {
     }
   }, [init]);
 
-  const addChild = () => {
-    const p = document.createElement('p');
-    p.innerHTML = `new child ${childCount}`;
-    container.current.appendChild(p);
-  };
+  // const addChild = () => {
+  //   const p = document.createElement('p');
+  //   p.innerHTML = `new child ${childCount}`;
+  //   container.current.appendChild(p);
+  // };
 
   useEffect(() => {
     // addChild();
