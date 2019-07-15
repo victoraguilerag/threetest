@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import GLTFLoader from 'three-gltf-loader';
+
 
 function Home() {
   const [childCount] = useState(0);
@@ -58,23 +60,34 @@ function Home() {
       0.1,
       1000,
     );
-    newCamera.position.z = 4;
-    setCamera(newCamera);
-    // ADD RENDERER
-    const newRenderer = new THREE.WebGLRenderer({ antialias: true });
-    newRenderer.setClearColor('#000000');
-    newRenderer.setSize(window.innerWidth, window.innerHeight);
-    setRenderer(newRenderer);
-    container.current.appendChild(newRenderer.domElement);
-    // ADD CUBE
-    const geometry = new THREE.BoxGeometry(3, 3, 3);
-    const texture = new THREE.TextureLoader().load('/static/daniela.jpg');
-    const material = new THREE.MeshBasicMaterial({ map: texture });
-    const newCube = new THREE.Mesh(geometry, material);
-    setCube(newCube);
-    newScene.add(newCube);
-    setScene(newScene);
-    setInit(true);
+
+    const loader = new GLTFLoader();
+
+    loader.load('static/phonetoweb.glb', (gltf) => {
+      console.log(gltf);
+      newCamera.position.z = 4;
+      setCamera(newCamera);
+      // ADD RENDERER
+      const newRenderer = new THREE.WebGLRenderer({ antialias: true });
+      newRenderer.setClearColor('#000000');
+      newRenderer.setSize(window.innerWidth, window.innerHeight);
+      setRenderer(newRenderer);
+      container.current.appendChild(newRenderer.domElement);
+      // ADD CUBE
+      const geometry = new THREE.BoxGeometry(3, 3, 3);
+      const texture = new THREE.TextureLoader().load('/static/daniela.jpg');
+      const material = new THREE.MeshBasicMaterial({ map: texture });
+      const newCube = new THREE.Mesh(geometry, material);
+      setCube(newCube);
+      // newScene.add(newCube);
+      newScene.add(gltf.scene);
+      setScene(newScene);
+      setInit(true);
+    }, undefined, (error) => {
+      console.error(error);
+    });
+
+
   }, []);
 
   useEffect(() => {
